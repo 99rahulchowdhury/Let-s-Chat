@@ -21,7 +21,89 @@ for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', 
     
 });
 </script>
-
+<style>
+    /* Styling for the modal */
+    
+    .modal {
+      display: none; /* Hide the modal by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top of everything */
+    
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+    }
+    .modal-content {
+      background-color: #424242;
+      margin: 1% 37%; /* 15% from the top and centered */
+      padding: 6px;
+      border: 1px solid #888;
+      width: 30%; /* Width of the modal */
+    }
+    /* Styling for the close button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+</style>
+{% if error %}
+<!-- <div class="alert alert-danger" role="alert"> -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>OTP doesn't match! </h2>
+   
+    </div>
+  </div>
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the close button
+    var closeBtn = document.getElementsByClassName("close")[0];
+    // When the user clicks on the close button, hide the modal
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+    }
+    // Show the modal
+    modal.style.display = "block";
+  </script>
+<!-- </div> -->
+{% endif %}
+{% if error1 %}
+<!-- <div class="alert alert-danger" role="alert"> -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Password Changed Successfully! </h2>
+   
+    </div>
+  </div>
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the close button
+    var closeBtn = document.getElementsByClassName("close")[0];
+    // When the user clicks on the close button, hide the modal
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+      window.location.href = '/';
+    }
+    // Show the modal
+    modal.style.display = "block";
+  </script>
+<!-- </div> -->
+{% endif %}
 
 <body>
     <div class="container height-100 d-flex justify-content-center align-items-center" > 

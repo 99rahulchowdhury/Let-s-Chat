@@ -252,10 +252,141 @@
   margin-bottom: 1rem;
   margin-left: -162vh; font-size: smaller;">Chat with anyone, anywhere, anytime!</p>
   <br>
+  <style>
+    /* Styling for the modal */
+    
+    .modal {
+      display: none; /* Hide the modal by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top of everything */
+    
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+    }
+    .modal-content {
+      background-color: #424242;
+      margin: 1% 37%; /* 15% from the top and centered */
+      padding: 6px;
+      border: 1px solid #888;
+      width: 30%; /* Width of the modal */
+    }
+    /* Styling for the close button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+</style>
+{% if error1 %}
+<!-- <div class="alert alert-danger" role="alert"> -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Username already exist!! Try another! </h2>
+   
+    </div>
+  </div>
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the close button
+    var closeBtn = document.getElementsByClassName("close")[0];
+    // When the user clicks on the close button, hide the modal
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+    }
+    // Show the modal
+    modal.style.display = "block";
+  </script>
+<!-- </div> -->
+{% endif %}
+{% if error2 %}
+<!-- <div class="alert alert-danger" role="alert"> -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Username or password is incorreect! </h2>
+   
+    </div>
+  </div>
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the close button
+    var closeBtn = document.getElementsByClassName("close")[0];
+    // When the user clicks on the close button, hide the modal
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+    }
+    // Show the modal
+    modal.style.display = "block";
+  </script>
+<!-- </div> -->
+{% endif %}
+{% if error11 %}
+<!-- <div class="alert alert-danger" role="alert"> -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Field is empty!! </h2>
+   
+    </div>
+  </div>
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the close button
+    var closeBtn = document.getElementsByClassName("close")[0];
+    // When the user clicks on the close button, hide the modal
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+    }
+    // Show the modal
+    modal.style.display = "block";
+  </script>
+<!-- </div> -->
+{% endif %}
+{% if error3 %}
+<!-- <div class="alert alert-danger" role="alert"> -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Username doesn't exist! </h2>
+   
+    </div>
+  </div>
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the close button
+    var closeBtn = document.getElementsByClassName("close")[0];
+    // When the user clicks on the close button, hide the modal
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+    }
+    // Show the modal
+    modal.style.display = "block";
+  </script>
+<!-- </div> -->
+{% endif %}
+
+
+
   <div class="form-container">
     <form id="check-form" action="/check" method="get">
       <div class="form-group">
-        <label for="em">Username:</label>
+        <label for="em">Email:</label>
         <input type="email" class="form-control" name="em">
       </div>
       <div class="form-group">

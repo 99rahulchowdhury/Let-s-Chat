@@ -203,8 +203,66 @@
     margin-top: 50px;
   }
 </style>
-
+<style>
+  /* Styling for the modal */
+  
+  .modal {
+    display: none; /* Hide the modal by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top of everything */
+  
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+  }
+  .modal-content {
+    background-color: #424242;
+    margin: 1% 37%; /* 15% from the top and centered */
+    padding: 6px;
+    border: 1px solid #888;
+    width: 30%; /* Width of the modal */
+  }
+  /* Styling for the close button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
 <body class="bg-dark p-2 text-white bg-opacity-100">
+  {% if error %}
+  <!-- <div class="alert alert-danger" role="alert"> -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Nickname already exist!! Try another</h2>
+     
+      </div>
+    </div>
+    <script>
+      // Get the modal
+      var modal = document.getElementById("myModal");
+      // Get the close button
+      var closeBtn = document.getElementsByClassName("close")[0];
+      // When the user clicks on the close button, hide the modal
+      closeBtn.onclick = function() {
+        modal.style.display = "none";
+      }
+      // Show the modal
+      modal.style.display = "block";
+    </script>
+  <!-- </div> -->
+{% endif %}
   <!-- As a link -->
 
   <!-- <nav class="bg-success p-2 text-white bg-opacity-75">
@@ -218,14 +276,16 @@
   <img src="https://cdn-icons-png.flaticon.com/512/134/134909.png" style="height: 100px;">
   <br>
   <div>
-    <form action="/data" method="get">
+    <form action="/data" method="POST">
+      {% csrf_token %}
       <div class="row mb-3">
-        <label style="width: 10%; margin-left: 90vh; font-size: 32px;" for="em"
+        <label style="display: flex;
+        flex-wrap: wrap; width: 10%; margin-left: 90vh; font-size: 32px;" for="em"
           class="col-sm-2 col-form-label">Nickname</label>
         <br></br>
       </div>
       <div class="col-sm-6">
-        <input type="ni" class="neon-button form-control" name="ni">
+        <input type="ni" required class="neon-button form-control" name="ni">
       </div>
 
 
@@ -234,7 +294,8 @@
 
   </div>
   <h1>Choose Your Avatar</h1>
-  <form method="get" action="/data">
+  <form method="POST" action="/data">
+    {% csrf_token %}
   <div class="avatars">
     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="100" height="100">
     <button name="Choose" type="Choose"

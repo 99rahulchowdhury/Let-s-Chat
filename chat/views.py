@@ -76,13 +76,17 @@ def room(request,room):
     username = request.GET.get('username')
     
    
-    a=Users.objects.filter(name=username)
+    a=Users.objects.filter(name=room).values();
+    
+    a=a[0]['image']
     
     # return re(request,'room.html')
     return re(request, 'room.html', {
         'username': username,
         'room': room,
         'room_details': room,
+        'image':a
+
       
         
     })
@@ -93,17 +97,22 @@ def room(request,room):
 
 
 def checkrecipent(request):
-    room=request.POST['rn']
-    ff=request.POST['sg']
-   
+    # room=request.POST['rn']
+    room=request.POST['room_id']
+    ff=request.POST['username']
     # if(Message.objects.filter(user=ff,recipent=room).exists()):
     #     return rd('/'+room+'/?userame='+ff)
     # else:
     #     ss=Message.objects.create(user=)
     #     ss.save()
+    print(room)
+    print(ff)
     return rd('/'+room+'/?username='+ff)
 
     # if(Users.objects.filter(name=recipent_name).exists()):
+
+
+
 def send(request):
     message = request.POST['message']
     username = request.POST['username']
@@ -152,21 +161,37 @@ def getMessages(request, room,username):
     return JsonResponse({"messages":ans,'value':value,'nickname':nickname,'meimg':meimg,'reimg':reimg})
  
 def data(request):
-    nic=request.GET.get('ni')
+    nic=request.POST['ni']
+   
     
-
-    u=request.GET.get('Choose')
-    print(u)
+    
+    u=request.POST['Choose']
     usrname,img=u.split(' ')
-    a= Users.objects.get(name=usrname)
-    
-    a.nickname=nic
-    a.image=img
+    b=Users.objects.all().values();
 
-    a.save()
+    b=b[1:]
+    print(nic)
+    print(u)
   
- 
-    return re(request,'recipent.html',{'usern':usrname})
+    
+
+   
+   
+    if(Users.objects.filter(nickname=nic).exists()):
+        qq=False
+        return re(request,'data.html',{'error':'error','usern':usrname})
+    else:
+    
+        a= Users.objects.get(name=usrname)
+    
+        a.nickname=nic
+        a.image=img
+        a.save()
+    
+
+
+    
+        return re(request,'home.html')
 
 
 def check(request):
@@ -174,20 +199,14 @@ def check(request):
     user_password=request.GET.get('ps',0)
     user_signup=request.GET.get('sb',0)
     user_login=request.GET.get('lb',0)
-    user_log=request.GET.get('submit2',0)
-    print(user_signup)
-    print(user_login)
-    if(user_log):
-        
-        if(Users.objects.filter(name=user_name).exists()):
-            if(Users.objects.filter(name=user_name,password=user_password).exists()):
+    # print(user_signup)
+    # print(user_login)
 
-                return re(request,'recipent.html',{'usern':user_name})
-            else:
-                return re(request,'back.html')
     if(user_signup):
-        if(Users.objects.filter(name=user_name).exists()):
-            return re(request,'back.html')
+        if(user_name=="" or user_password==""):
+            return re(request,'home.html',{'error11':'error11'})
+        elif(Users.objects.filter(name=user_name).exists()):
+            return re(request,'home.html',{'error1':'error1'})
         
         else:
             new_username=Users.objects.create(name=user_name,password=user_password)
@@ -195,37 +214,47 @@ def check(request):
             
             return re(request,'data.html',{'usern':user_name})
     elif(user_login):
-
-        if(Users.objects.filter(name=user_name).exists()):
+        if(user_name=="" or user_password==""):
+            return re(request,'home.html',{'error11':'error1'})
+        elif(Users.objects.filter(name=user_name).exists()):
             if(Users.objects.filter(name=user_name,password=user_password).exists()):
-
-                return re(request,'recipent.html',{'usern':user_name})
+                b=Users.objects.all().values()
+                b=b[1:]
+            
+                f={'my_values':b,'usern':user_name}
+                return re(request,'extra.html',f)
             else:
-                return re(request,'back.html')
+                return re(request,'home.html',{'error2':'error2'})
 
         else:
     
             
-            return re(request,'Login.html')
+            return re(request,'home.html',{'error3':1})
     else:
-        return re(request,'forgot.html')    
+        
+
+        return re(request,'forgot.html')   
 def forgot(request):
     global ottt
     global new_password
     global new_usersss
     username=request.POST['nm']
-    email=request.POST['em']
+    email=request.POST['nm']
     password=request.POST['pss']
     
     submit=request.POST['sl']
 
     if(submit):
-        new_usersss=username
-        new_password=password
-        ot=otp()
-        ottt=ot
-        send_email(email,ot)
-        return re(request,'otp.html',{'email':email})
+        if(Users.objects.filter(name=username).exists()):
+            new_usersss=username
+            new_password=password
+            ot=otp()
+            ottt=ot
+            send_email(email,ot)
+            return re(request,'otp.html',{'email':email})
+        else:
+            return re(request,'forgot.html',{'error':'error'})
+       
 def otpp(request):
     
     f=request.POST['first']
@@ -236,7 +265,7 @@ def otpp(request):
     
     if(sp):
         x=f+s+t+fo
-        print(x)
+ 
         if(str(ottt)==x):
             a= Users.objects.get(name=new_usersss)
     
@@ -245,7 +274,9 @@ def otpp(request):
 
             a.save()
             
-            return re(request,'pass.html')
+            return re(request,'otp.html',{'error1':'error'})
+        else:
+            return re(request,'otp.html',{'error':1})
     
         
 

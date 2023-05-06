@@ -9,11 +9,12 @@ urlpatterns=[
     path('<str:room>/',views.room,name='room'),
     path('check',views.check,name='check'),
     path('data',views.data,name='data'),
+    path('checkrecipent', views.checkrecipent, name='checkrecipent'),
     path('forgot',views.forgot,name='forgot'),
     path('otpp',views.otpp,name='otpp'),
-    path('checkrecipent',views.checkrecipent,name='checkrecipent'),
+    # path('checkrecipent',views.checkrecipent,name='checkrecipent'),
     path('send',views.send,name='send'),
-
+    
     path('getMessages/<str:room>/<str:username>/',views.getMessages,name='getMessages'),
     
 
